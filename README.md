@@ -1,61 +1,29 @@
-# Emotion Detection using Deep Learning
+# ZAF004_CV_EmotionDetection
 
-## Introduction
+### Project Methodology 
 
-This project aims to classify the emotion on a person's face into one of **seven categories**, using deep convolutional neural networks. The model is trained on the **FER-2013** dataset which was published on International Conference on Machine Learning (ICML). This dataset consists of 35887 grayscale, 48x48 sized face images with **seven emotions** - angry, disgusted, fearful, happy, neutral, sad and surprised.
+We need to validate both Static and dynamic models for different scenarios
+- Evaluate classification techniques like Bayersian classifiers, deep belief networks, AUDN (action aware deep
+networks)
 
-## Dependencies
+- For Dynamic models we look at DBM (dynamic bayesian model) such as hidden markov models
+- even RNN is used for eg: to predict real valued position of an expression, we need to cluster the data and perform
+kernel regression
+- More interesting would be to look at DBLSTM (deep bidirectinal LSTM)
+- By using CNN with LSTM we can build the model that can track objects (sitting, standing, sleeping, walking)
+- Big data frameworks on AWS will be used in deployment - Spark with EMR will be initiated by lambda services - S3
+buckets will hold footage data in realtime
+- for local environment - we will take the approach of part to whole - each component will be made to
+work separately - major integrations to happen only between mid to year end
+- Focus on BDLSTM, learn about AlexNet, train on emotion images, train on emotion simple videos
+train next on CCTV footage of low quality and high quality. Airport control have promised high quality cameras with
+Intellgent zoom.
+- Be aware of SVM, YOLO, Autoencoders, VGG, LSTM as a background
 
-* Python 3, [OpenCV](https://opencv.org/), [Tensorflow](https://www.tensorflow.org/)
-* To install the required packages, run `pip install -r requirements.txt`.
+Before you commit:
 
-## Model
+#### As for further methodology, consider stacked neural networks. For emotion set - consider not only basic - sad, happy, inched body language (! For camera input) like fidgeting, twitching.
 
-[Emotion Detction Notebook](https://github.com/amitbakde99/Emotion-Detection-Project/blob/main/Emotion_Detection.ipynb)
+#### Consider search for specific emotion like intention to do smth, to take an action. Assume, the person is onboard of the airline and he is a terrorist. Which emotion would help to detect his intention and at least consider him with some doubts?
 
-The repository is currently compatible with `tensorflow-2.0` and makes use of the Keras API using the `tensorflow.keras` library.
-
-* This implementation by default detects emotions on all faces in the webcam feed. With a simple 4-layer CNN, the test accuracy reached 60% in 20 epochs.
-* About [Training and Validation Loss](https://github.com/amitbakde99/Emotion-Detection-Project/blob/main/Training%20and%20Validation%20Loss.md)
-
-![my image](https://github.com/amitbakde99/Emotion-Detection-Project/blob/main/imgs/Screenshot%202022-12-23%20122412.jpg)
-
-## Review of the Dataset FER 2013
-
-* The dataset is not realistic because as we can observe background is white and this is very crystal clear image and we can just observe the image based on their facial expression it is easily can be classified, if we for example train our deep learning model on this plain images and then we deploy it in the real time environment, then our model will definitely fail. Because all of the previous images on which we trained our deep learning model was front looking image but this will not be in the real case. Thats why dataset should be realistic. On this dataset the accuracy will be low due to above mention reasons.
-
-![alt text](https://github.com/amitbakde99/Emotion-Detection-Project/blob/main/imgs/Screenshot%202022-12-23%20122231.jpg)
-
-* There is imbalance problem in dataset, as we can see happy images are in highest numbers of 1774 and for disgusted we only have 111 files. Typically deep learning architecture must have same size of classes ideally. If it is not then deep learning architecture will be biased towards the happy class for example. it will not be robust for digusted and accuracy will be lower towrds the same. Solution to this is data augumentation. We can increase the images by rotating the images, scale the images zoom in zoom out and other combinations. We can also use GANs to produce more files.
-* Intra class variations means some images are of human but,some are paintings, cartoons.
-* Occulusion means some images the faces are hidden by hands or by eyeglasses.
-* Contrast variations means some images have more contrast or less contrast which will effect the accuracy of the model. 
-* Outliers means some images are completely unrelated with the class they are present in.
-
-
-## Algorithm
-
-* First, the **haar cascade** method is used to detect faces in each frame of the webcam feed.
-
-* The region of image containing the face is resized to **48x48** and is passed as input to the CNN.
-
-* The network outputs a list of **softmax scores** for the seven classes of emotions.
-
-* The emotion with maximum score is displayed on the screen.
-
-
-## Flask App
-
-This Webpage takes the image from the user and predict the emotion with the help of deep learning model which is integrated at the backend.
-
-Results
-
-![image](https://github.com/amitbakde99/Emotion-Detection-Project/blob/main/imgs/Screenshot%202022-12-23%20130558.jpg)
-
-## References
-
-* "Challenges in Representation Learning: A report on three machine learning contests." I Goodfellow, D Erhan, PL Carrier, A Courville, M Mirza, B
-   Hamner, W Cukierski, Y Tang, DH Lee, Y Zhou, C Ramaiah, F Feng, R Li,  
-   X Wang, D Athanasakis, J Shawe-Taylor, M Milakov, J Park, R Ionescu,
-   M Popescu, C Grozea, J Bergstra, J Xie, L Romaszko, B Xu, Z Chuang, and
-   Y. Bengio. arXiv 2013.
+Test sample (four different smiles): https://drive.google.com/drive/folders/1oPJcfAu3tmoSHOaS4dtM4T3k7FRay6u4?usp=share_link
